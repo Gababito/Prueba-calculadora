@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Pro</title>
+    <title>Calculadora Ultra Pro</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         
         body {
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+        }
+
+        .contenedor-principal {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 350px;
         }
 
         .calculadora {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-            width: 320px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         #pantalla {
             width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.2);
+            height: 70px;
+            background: transparent;
             border: none;
-            outline: none;
-            border-radius: 10px;
             color: #fff;
             text-align: right;
-            padding: 15px;
-            font-size: 28px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+            font-size: 32px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        /* Estilo del Historial */
+        .historial {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 10px;
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
         }
 
         .botones {
@@ -45,81 +61,95 @@
         }
 
         button {
-            height: 60px;
-            border-radius: 12px;
+            height: 65px;
+            border-radius: 15px;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: white;
-            font-size: 18px;
-            font-weight: 500;
+            font-size: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.2s ease;
         }
 
-        button:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-        button:active { transform: translateY(0px); }
+        button:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.2); }
 
-        .operador { background: rgba(255, 165, 0, 0.2); color: #ff9f0a; font-weight: bold; }
-        .operador:hover { background: rgba(255, 165, 0, 0.4); }
-
-        .igual {
-            grid-column: span 2;
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-        }
-
-        .clear { color: #ff4d4d; }
+        .operador { color: #4facfe; font-weight: bold; }
+        .igual { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); color: #1a1a2e; font-weight: bold; grid-column: span 2; }
+        .clear { color: #ff4b2b; }
     </style>
 </head>
 <body>
 
-    <div class="calculadora">
-        <input type="text" id="pantalla" readonly placeholder="0">
-        
-        <div class="botones">
-            <button onclick="limpiar()" class="clear">C</button>
-            <button onclick="borrarUno()">←</button>
-            <button onclick="agregar('/')" class="operador">÷</button>
-            <button onclick="agregar('*')" class="operador">×</button>
+    <div class="contenedor-principal">
+        <div class="calculadora">
+            <div class="historial" id="lista-historial">Historial vacío</div>
+            <input type="text" id="pantalla" readonly placeholder="0">
             
-            <button onclick="agregar('7')">7</button>
-            <button onclick="agregar('8')">8</button>
-            <button onclick="agregar('9')">9</button>
-            <button onclick="agregar('-')" class="operador">-</button>
-            
-            <button onclick="agregar('4')">4</button>
-            <button onclick="agregar('5')">5</button>
-            <button onclick="agregar('6')">6</button>
-            <button onclick="agregar('+')" class="operador">+</button>
-            
-            <button onclick="agregar('1')">1</button>
-            <button onclick="agregar('2')">2</button>
-            <button onclick="agregar('3')">3</button>
-            <button onclick="calcular()" class="igual">=</button>
-            
-            <button onclick="agregar('0')" style="grid-column: span 2;">0</button>
-            <button onclick="agregar('.')">.</button>
+            <div class="botones">
+                <button onclick="limpiar()" class="clear">AC</button>
+                <button onclick="borrarUno()">DEL</button>
+                <button onclick="agregar('/')" class="operador">÷</button>
+                <button onclick="agregar('*')" class="operador">×</button>
+                
+                <button onclick="agregar('7')">7</button>
+                <button onclick="agregar('8')">8</button>
+                <button onclick="agregar('9')">9</button>
+                <button onclick="agregar('-')" class="operador">-</button>
+                
+                <button onclick="agregar('4')">4</button>
+                <button onclick="agregar('5')">5</button>
+                <button onclick="agregar('6')">6</button>
+                <button onclick="agregar('+')" class="operador">+</button>
+                
+                <button onclick="agregar('1')">1</button>
+                <button onclick="agregar('2')">2</button>
+                <button onclick="agregar('3')">3</button>
+                <button onclick="calcular()" class="igual">=</button>
+                
+                <button onclick="agregar('0')" style="grid-column: span 2;">0</button>
+                <button onclick="agregar('.')">.</button>
+            </div>
         </div>
     </div>
 
     <script>
         const pantalla = document.getElementById('pantalla');
+        const listaHistorial = document.getElementById('lista-historial');
+
+        function vibrar() {
+            // Solo funciona en dispositivos móviles
+            if (navigator.vibrate) navigator.vibrate(20);
+        }
 
         function agregar(valor) {
+            vibrar();
             if (pantalla.value === 'Error') limpiar();
             pantalla.value += valor;
         }
 
-        function limpiar() { pantalla.value = ''; }
+        function limpiar() {
+            vibrar();
+            pantalla.value = '';
+        }
 
         function borrarUno() {
+            vibrar();
             pantalla.value = pantalla.value.slice(0, -1);
         }
 
         function calcular() {
+            vibrar();
             try {
-                // Usamos una función más segura que eval para resolver mates básicas
-                pantalla.value = Function('"use strict";return (' + pantalla.value + ')')();
+                let expresion = pantalla.value;
+                let resultado = Function('"use strict";return (' + expresion + ')')();
+                
+                // Agregar al historial
+                let item = document.createElement('div');
+                item.innerText = `${expresion} = ${resultado}`;
+                if (listaHistorial.innerText === 'Historial vacío') listaHistorial.innerText = '';
+                listaHistorial.prepend(item);
+                
+                pantalla.value = resultado;
             } catch (e) {
                 pantalla.value = 'Error';
             }
